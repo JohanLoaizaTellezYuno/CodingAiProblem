@@ -66,9 +66,9 @@ function generateMockAnomalies(records: ReconciledRecord[]): Anomaly[] {
                           record.settlement_status === 'discrepancy' ? 'fee_discrepancy' :
                           record.timing_anomaly ? 'timing_delay' : 'ghost_settlement';
 
-      const severity: 'critical' | 'warning' | 'info' =
+      const severity: 'critical' | 'high' | 'medium' | 'low' =
         record.discrepancy_amount > 1000 ? 'critical' :
-        record.discrepancy_amount > 100 ? 'warning' : 'info';
+        record.discrepancy_amount > 100 ? 'high' : 'medium';
 
       anomalies.push({
         anomaly_id: `ANO_${String(index + 1).padStart(5, '0')}`,
@@ -80,14 +80,17 @@ function generateMockAnomalies(records: ReconciledRecord[]): Anomaly[] {
         anomaly_type: anomalyType,
         category: anomalyType.replace('_', ' '),
         amount: record.amount,
+        currency: record.currency,
+        amount_usd: record.amount, // Simplified for mock data
         expected_amount: record.expected_settled_amount,
+        actual_amount: record.actual_settled_amount || undefined,
         discrepancy: record.discrepancy_amount,
         severity,
         suggested_action: getSuggestedAction(anomalyType, record.provider),
       });
     });
 
-  return anomalies.sort((a, b) => b.discrepancy - a.discrepancy);
+  return anomalies.sort((a, b) => (b.discrepancy || 0) - (a.discrepancy || 0));
 }
 
 function getSuggestedAction(anomalyType: string, provider: string): string {

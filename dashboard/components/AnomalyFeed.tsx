@@ -10,13 +10,13 @@ interface AnomalyFeedProps {
 
 export default function AnomalyFeed({ anomalies }: AnomalyFeedProps) {
   const [sortBy, setSortBy] = useState<'discrepancy' | 'date'>('discrepancy');
-  const [filterSeverity, setFilterSeverity] = useState<'all' | 'critical' | 'warning' | 'info'>('all');
+  const [filterSeverity, setFilterSeverity] = useState<'all' | 'critical' | 'high' | 'medium' | 'low'>('all');
 
   const filteredAnomalies = anomalies
     .filter(a => filterSeverity === 'all' || a.severity === filterSeverity)
     .sort((a, b) => {
       if (sortBy === 'discrepancy') {
-        return b.discrepancy - a.discrepancy;
+        return (b.discrepancy || 0) - (a.discrepancy || 0);
       }
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     })
@@ -34,8 +34,9 @@ export default function AnomalyFeed({ anomalies }: AnomalyFeedProps) {
           >
             <option value="all">All Severity</option>
             <option value="critical">Critical</option>
-            <option value="warning">Warning</option>
-            <option value="info">Info</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
           </select>
           <select
             value={sortBy}
@@ -113,7 +114,7 @@ export default function AnomalyFeed({ anomalies }: AnomalyFeedProps) {
                   {formatCurrency(anomaly.amount)}
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap text-sm text-right font-semibold text-red-600">
-                  {formatCurrency(anomaly.discrepancy)}
+                  {anomaly.discrepancy ? formatCurrency(anomaly.discrepancy) : 'N/A'}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-500 max-w-xs truncate" title={anomaly.suggested_action}>
                   {anomaly.suggested_action}
@@ -133,7 +134,7 @@ export default function AnomalyFeed({ anomalies }: AnomalyFeedProps) {
       <div className="mt-4 flex items-center justify-between text-sm text-gray-600">
         <p>Showing top {filteredAnomalies.length} of {anomalies.length} anomalies</p>
         <p className="font-semibold">
-          Total Impact: {formatCurrency(filteredAnomalies.reduce((sum, a) => sum + a.discrepancy, 0))}
+          Total Impact: {formatCurrency(filteredAnomalies.reduce((sum, a) => sum + (a.discrepancy || 0), 0))}
         </p>
       </div>
     </div>

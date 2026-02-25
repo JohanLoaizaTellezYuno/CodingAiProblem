@@ -2,6 +2,12 @@
 
 A Next.js 14 dashboard for visualizing revenue anomalies and settlement reconciliation data for Horizon Gaming's payment processing operations across Latin America.
 
+## Live Demo
+
+**Deployment Ready** - Follow the [Deployment Guide](DEPLOYMENT.md) to deploy to Vercel in 5 minutes.
+
+Once deployed, your live URL will be: `https://[your-project-name].vercel.app`
+
 ## Features
 
 - **Real-time Metrics Overview**: Display key metrics including transaction volume, settled amounts, discrepancies, and rates

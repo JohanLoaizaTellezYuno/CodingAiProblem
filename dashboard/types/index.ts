@@ -42,9 +42,12 @@ export interface Anomaly {
   anomaly_type: 'missing_settlement' | 'fee_discrepancy' | 'timing_delay' | 'ghost_settlement';
   category: string;
   amount: number;
-  expected_amount: number;
-  discrepancy: number;
-  severity: 'critical' | 'warning' | 'info';
+  currency: string;
+  amount_usd: number;
+  expected_amount?: number;
+  actual_amount?: number;
+  discrepancy?: number;
+  severity: 'critical' | 'high' | 'medium' | 'low';
   suggested_action: string;
 }
 

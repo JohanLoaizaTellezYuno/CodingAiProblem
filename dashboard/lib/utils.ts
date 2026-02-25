@@ -32,12 +32,16 @@ export function formatDate(dateString: string): string {
   });
 }
 
-export function getSeverityColor(severity: 'critical' | 'warning' | 'info'): string {
+export function getSeverityColor(severity: 'critical' | 'high' | 'medium' | 'low' | 'warning' | 'info'): string {
   switch (severity) {
     case 'critical':
       return 'text-red-600 bg-red-50 border-red-200';
+    case 'high':
+      return 'text-orange-600 bg-orange-50 border-orange-200';
+    case 'medium':
     case 'warning':
       return 'text-yellow-600 bg-yellow-50 border-yellow-200';
+    case 'low':
     case 'info':
       return 'text-blue-600 bg-blue-50 border-blue-200';
   }
