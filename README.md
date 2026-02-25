@@ -136,12 +136,14 @@ Key configuration parameters in `.env`:
 
 ## Recent Changes
 
-### [2026-02-25] - Add pipeline configuration and fee calculation modules
-- Added `pipeline/config.py` for centralized configuration management
-- Implemented `pipeline/fees.py` with fee calculation logic for all payment methods
-- Added Next.js dashboard with initial setup and structure
-- Configured multi-currency support for BRL, MXN, COP, CLP
-- Set up settlement timing validation parameters
+### [2026-02-25] - Add pipeline modules and Next.js dashboard
+- Added `pipeline/config.py` for centralized configuration management with environment variable support
+- Implemented `pipeline/fees.py` with fee calculation logic for all payment methods (cards, bank transfers, cash vouchers)
+- Added `pipeline/generate_data.py`, `pipeline/reconcile.py`, and `pipeline/validate_data.py` for data processing pipeline
+- Added Next.js dashboard with TypeScript, Tailwind CSS, and initial component structure
+- Configured multi-currency support for BRL, MXN, COP, CLP with USD conversion
+- Set up settlement timing validation parameters for different payment methods
+- Created comprehensive README.md with installation instructions and usage examples
 
 ## Contributing
 
