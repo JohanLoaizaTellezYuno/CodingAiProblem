@@ -20,51 +20,53 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / 'pipeline'))
 from config import Config
 
 
+@pytest.fixture(scope="module")
+def test_data_paths(tmp_path_factory):
+    """Set up temporary paths for test execution (module-scoped)."""
+    # Create temporary directories using module-scoped tmp_path_factory
+    tmp_path = tmp_path_factory.mktemp("test_data")
+    raw_dir = tmp_path / "raw"
+    processed_dir = tmp_path / "processed"
+    raw_dir.mkdir()
+    processed_dir.mkdir()
+
+    # Copy test fixtures to temporary raw directory
+    fixtures_dir = Path(__file__).parent.parent / "fixtures"
+    shutil.copy(
+        fixtures_dir / "test_transactions.csv",
+        raw_dir / "transactions.csv"
+    )
+    shutil.copy(
+        fixtures_dir / "test_settlements.csv",
+        raw_dir / "settlements.csv"
+    )
+
+    # Store original config paths
+    original_txn_path = Config.TRANSACTIONS_DATA_PATH
+    original_settle_path = Config.SETTLEMENTS_DATA_PATH
+    original_output_path = Config.OUTPUT_PATH
+
+    # Set temporary paths
+    Config.TRANSACTIONS_DATA_PATH = str(raw_dir / "transactions.csv")
+    Config.SETTLEMENTS_DATA_PATH = str(raw_dir / "settlements.csv")
+    Config.OUTPUT_PATH = str(processed_dir) + "/"
+
+    yield {
+        'raw_dir': raw_dir,
+        'processed_dir': processed_dir,
+        'transactions_path': Config.TRANSACTIONS_DATA_PATH,
+        'settlements_path': Config.SETTLEMENTS_DATA_PATH,
+        'output_path': Config.OUTPUT_PATH
+    }
+
+    # Restore original paths
+    Config.TRANSACTIONS_DATA_PATH = original_txn_path
+    Config.SETTLEMENTS_DATA_PATH = original_settle_path
+    Config.OUTPUT_PATH = original_output_path
+
+
 class TestFullPipelineExecution:
     """Integration tests for complete pipeline execution."""
-
-    @pytest.fixture
-    def test_data_paths(self, tmp_path):
-        """Set up temporary paths for test execution."""
-        # Create temporary directories
-        raw_dir = tmp_path / "raw"
-        processed_dir = tmp_path / "processed"
-        raw_dir.mkdir()
-        processed_dir.mkdir()
-
-        # Copy test fixtures to temporary raw directory
-        fixtures_dir = Path(__file__).parent.parent / "fixtures"
-        shutil.copy(
-            fixtures_dir / "test_transactions.csv",
-            raw_dir / "transactions.csv"
-        )
-        shutil.copy(
-            fixtures_dir / "test_settlements.csv",
-            raw_dir / "settlements.csv"
-        )
-
-        # Store original config paths
-        original_txn_path = Config.TRANSACTIONS_DATA_PATH
-        original_settle_path = Config.SETTLEMENTS_DATA_PATH
-        original_output_path = Config.OUTPUT_PATH
-
-        # Set temporary paths
-        Config.TRANSACTIONS_DATA_PATH = str(raw_dir / "transactions.csv")
-        Config.SETTLEMENTS_DATA_PATH = str(raw_dir / "settlements.csv")
-        Config.OUTPUT_PATH = str(processed_dir) + "/"
-
-        yield {
-            'raw_dir': raw_dir,
-            'processed_dir': processed_dir,
-            'transactions_path': Config.TRANSACTIONS_DATA_PATH,
-            'settlements_path': Config.SETTLEMENTS_DATA_PATH,
-            'output_path': Config.OUTPUT_PATH
-        }
-
-        # Restore original paths
-        Config.TRANSACTIONS_DATA_PATH = original_txn_path
-        Config.SETTLEMENTS_DATA_PATH = original_settle_path
-        Config.OUTPUT_PATH = original_output_path
 
     def test_reconciliation_pipeline_execution(self, test_data_paths):
         """Test that reconciliation pipeline executes successfully."""
