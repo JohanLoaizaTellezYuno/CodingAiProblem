@@ -35,6 +35,9 @@ data/processed/*
 *.swo
 *~
 
+# Agent Memory
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
