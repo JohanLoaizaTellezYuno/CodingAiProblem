@@ -2,6 +2,12 @@
 
 > A comprehensive data pipeline and analytics dashboard for identifying and analyzing $847K USD in missing revenue across payment settlement discrepancies.
 
+## 🚀 Live Demo
+
+**Dashboard**: https://dashboard-phi-coral.vercel.app
+
+Try the live interactive dashboard with 1,000 real transaction records and comprehensive anomaly detection.
+
 ## Overview
 
 Horizon Gaming processes ~50,000 transactions per week across multiple payment providers in Latin America (Brazil, Mexico, Colombia, Chile). This solution identifies where money is "stuck" in the payment lifecycle by reconciling transaction data against settlement records and surfacing actionable insights to the finance team.
