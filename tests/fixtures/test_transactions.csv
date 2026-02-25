@@ -1,0 +1,16 @@
+transaction_id,timestamp,amount,currency,status,provider,payment_method,country,customer_id
+TXN_001,2026-02-01 10:00:00,100.00,BRL,captured,PayBridge,credit_card,Brazil,CUST_001
+TXN_002,2026-02-01 11:00:00,200.00,MXN,captured,LatamPay,debit_card,Mexico,CUST_002
+TXN_003,2026-02-01 12:00:00,500.00,COP,captured,GlobalSettle,bank_transfer,Colombia,CUST_003
+TXN_004,2026-02-01 13:00:00,150.00,CLP,captured,FastPay,cash_voucher,Chile,CUST_004
+TXN_005,2026-02-01 14:00:00,300.00,BRL,captured,PayBridge,credit_card,Brazil,CUST_005
+TXN_006,2026-02-01 15:00:00,75.00,BRL,authorized,PayBridge,credit_card,Brazil,CUST_006
+TXN_007,2026-02-01 16:00:00,250.00,MXN,declined,LatamPay,debit_card,Mexico,CUST_007
+TXN_008,2026-02-01 17:00:00,400.00,BRL,captured,PayBridge,credit_card,Brazil,CUST_008
+TXN_009,2026-02-01 18:00:00,600.00,MXN,captured,LatamPay,bank_transfer,Mexico,CUST_009
+TXN_010,2026-02-01 19:00:00,1000.00,COP,captured,GlobalSettle,credit_card,Colombia,CUST_010
+TXN_011,2026-02-02 10:00:00,350.00,BRL,refunded,PayBridge,credit_card,Brazil,CUST_011
+TXN_012,2026-02-02 11:00:00,450.00,MXN,chargedback,LatamPay,debit_card,Mexico,CUST_012
+TXN_013,2026-02-02 12:00:00,800.00,BRL,captured,PayBridge,credit_card,Brazil,CUST_013
+TXN_014,2026-02-02 13:00:00,550.00,CLP,captured,FastPay,cash_voucher,Chile,CUST_014
+TXN_015,2026-02-02 14:00:00,900.00,MXN,captured,LatamPay,credit_card,Mexico,CUST_015
