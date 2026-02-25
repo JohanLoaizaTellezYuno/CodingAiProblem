@@ -49,6 +49,23 @@ def calculate_aggregate_metrics(reconciled_df: pd.DataFrame) -> Dict:
     Returns:
         Dictionary with aggregate metrics
     """
+    # Handle empty DataFrame
+    if reconciled_df is None or len(reconciled_df) == 0:
+        return {
+            'overall': {
+                'total_transactions': 0,
+                'total_amount_usd': 0.0,
+                'total_settled_usd': 0.0,
+                'missing_revenue_usd': 0.0,
+                'discrepancy_amount_usd': 0.0,
+                'total_discrepancy_usd': 0.0
+            },
+            'by_provider': [],
+            'by_payment_method': [],
+            'by_country': [],
+            'time_series': []
+        }
+
     metrics = {}
 
     # Overall metrics
@@ -203,6 +220,18 @@ def categorize_revenue(reconciled_df: pd.DataFrame) -> Dict:
     Returns:
         Dictionary with categorized revenue impacts
     """
+    # Handle empty DataFrame
+    if reconciled_df is None or len(reconciled_df) == 0:
+        return {
+            'unsettled_authorizations': {'count': 0, 'amount_usd': 0.0, 'severity': 'low', 'description': 'Authorized but not captured transactions (abandoned carts - expected)'},
+            'missing_settlements': {'count': 0, 'amount_usd': 0.0, 'severity': 'critical', 'description': 'Captured transactions with no settlement record'},
+            'unexpected_fees': {'count': 0, 'amount_usd': 0.0, 'severity': 'high', 'description': 'Settlement amounts differ from expected fees'},
+            'chargebacks': {'count': 0, 'amount_usd': 0.0, 'severity': 'medium', 'description': 'Transactions reversed due to customer disputes'},
+            'refunds': {'count': 0, 'amount_usd': 0.0, 'severity': 'low', 'description': 'Transactions refunded to customers'},
+            'timing_delays': {'count': 0, 'amount_usd': 0.0, 'severity': 'medium', 'description': 'Settlements delayed beyond expected timeframe'},
+            'ghost_settlements': {'count': 0, 'amount_usd': 0.0, 'severity': 'high', 'description': 'Settlements with no matching transaction record'}
+        }
+
     categories = {}
 
     # Add USD amounts
@@ -312,6 +341,10 @@ def identify_patterns(reconciled_df: pd.DataFrame, categories: Dict) -> List[str
     Returns:
         List of pattern insights
     """
+    # Handle empty DataFrame
+    if reconciled_df is None or len(reconciled_df) == 0:
+        return []
+
     patterns = []
 
     # Add USD amounts
@@ -414,6 +447,10 @@ def generate_prioritized_anomalies(reconciled_df: pd.DataFrame) -> List[Dict]:
     Returns:
         List of anomaly records with suggested actions
     """
+    # Handle empty DataFrame
+    if reconciled_df is None or len(reconciled_df) == 0:
+        return []
+
     anomalies = []
 
     # Add USD amounts
