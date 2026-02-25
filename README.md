@@ -206,10 +206,15 @@ This project uses GitHub Actions for automated testing and deployment:
 - Dashboard build validation
 - ESLint code quality checks
 
-**Deployment Workflow** (runs on tag push):
-- Automated deployment to production
-- Dashboard deployment to Vercel
-- Pipeline deployment to AWS Lambda (optional)
+**Deployment Workflow** (runs on push to main):
+- Automated deployment to Vercel production
+- Requires `VERCEL_TOKEN` secret in GitHub repository settings
+
+**Setup Vercel Auto-Deploy:**
+1. Get token: https://vercel.com/account/tokens
+2. GitHub → Repository Settings → Secrets and variables → Actions
+3. New repository secret: `VERCEL_TOKEN`
+4. Push to main branch to trigger deployment
 
 To run the same checks locally:
 ```bash
