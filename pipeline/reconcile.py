@@ -108,6 +108,10 @@ def calculate_discrepancies(reconciled_df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         DataFrame with discrepancy calculations
     """
+    # Handle empty DataFrame
+    if reconciled_df is None or len(reconciled_df) == 0:
+        return reconciled_df
+
     reconciled_df = reconciled_df.copy()
 
     # Calculate discrepancy (only for settled transactions)
@@ -140,6 +144,10 @@ def detect_timing_anomalies(reconciled_df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         DataFrame with timing anomaly flags
     """
+    # Handle empty DataFrame
+    if reconciled_df is None or len(reconciled_df) == 0:
+        return reconciled_df
+
     reconciled_df = reconciled_df.copy()
 
     # Calculate days to settle
