@@ -38,6 +38,18 @@ data/processed/*
 # Agent Memory
 .claude/
 
+# Documentation (keep local, exclude from repo)
+EVALUATION_REPORT.md
+FINDINGS.md
+IMPLEMENTATION_SUMMARY.md
+PROJECT_STATUS.md
+IMPROVEMENT_PLAN.md
+PHASE4_COMPLETE.md
+dashboard/DEPLOYMENT*.md
+dashboard/DEPLOY_NOW.md
+dashboard/QUICKSTART.md
+dashboard/README.md
+
 # OS
 .DS_Store
 Thumbs.db
